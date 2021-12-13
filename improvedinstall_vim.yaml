@@ -4,11 +4,9 @@
   become: true
   tasks:
 
-  - name: update repository index on any Linux Distribution
-    package:
-      update_cache: yes
-
   - name: install vim package on any Linux Distribution
     package:
-      name: vim
+      name: 
+        - "{{ package_name }}"
       state: latest
+      update_cache: yes
