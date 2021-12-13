@@ -1,15 +1,27 @@
 ---
 
-- hosts: 192.168.*
+- hosts: all
   become: true
   tasks:
 
-  - name: update repository index
+  - name: update repository index on Debian/Ubuntu
     apt:
       update_cache: yes
-    when: ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04"
+    when: ansible_distribution in ["Debian", "Ubuntu"]
 
-  - name: install vim package
+  - name: install vim package on Debian/Ubuntu
     apt:
       name: vim
+      state: latest
     when: ansible_distribution in ["Ubuntu","Debian"]
+
+  - name: update repository index on CentOS
+    yum:
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install vim package on CentOS
+    yum:
+      name: vim
+      state: latest
+    when: ansible_distribution == "CentOS"

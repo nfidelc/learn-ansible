@@ -1,10 +1,17 @@
 ---
 
-- hosts: 192.168.*
+- hosts: all
   become: true
   tasks:
 
-  - name: remove vim package
+  - name: remove vim package on Debian/Ubuntu
     apt:
       name: vim
       state: absent
+    when: ansible_distribution in ["Debian","Ubuntu"]
+
+  - name: remove vim package on CentOS
+    yum:
+      name: vim
+      state: absent
+    when: ansible_distribution in ["CentOS"]

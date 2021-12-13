@@ -4,6 +4,12 @@
   become: true
   tasks:
 
-  - name: update cache
+  - name: update Ubuntu cache
     apt:
       update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+  - name: update CentOS cache
+    yum:
+      update_cache: yes
+    when: ansible_distribution in ["CentOS"]
